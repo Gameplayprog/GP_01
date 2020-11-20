@@ -17,7 +17,6 @@ void AVechilePlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Playercontroller possing %s"), *(ControlledTank->GetName()));
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Playercontroller Begin play"));
 }
 ATank* AVechilePlayerController::GetControlledTank() const
 {
