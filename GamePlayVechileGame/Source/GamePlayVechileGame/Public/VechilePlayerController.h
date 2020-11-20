@@ -16,9 +16,18 @@ class GAMEPLAYVECHILEGAME_API AVechilePlayerController : public APlayerControlle
 	GENERATED_BODY()
 	
 
-public:
+private:
 	ATank* GetControlledTank() const;
-
 	//Getting begin play inherited from actor and overiding it 
 	void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+	//start the Vechile mocing gun so that the show would hit where crosshair itersects world
+	void AimTowardsCrosshair();
+	bool GetSightRayHitLocation(FVector& HitLocation ) const;
+	
+	UPROPERTY(EditAnywhere)
+	float crosshairXLocation = 0.5;
+
+	UPROPERTY(EditAnywhere)
+	float crosshairYLocation = 0.3333;
 };
