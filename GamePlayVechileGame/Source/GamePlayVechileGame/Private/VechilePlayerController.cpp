@@ -62,7 +62,7 @@ bool AVechilePlayerController::GetVectorHitLocation(FVector LookDirection, FVect
 	if (GetWorld()->LineTraceSingleByChannel(TraceHit, StartTrace, EndLocation, ECollisionChannel::ECC_Visibility))
 	{
 		HitLocation = TraceHit.Location;
-		UE_LOG(LogTemp, Warning, TEXT("look direction: %s"), *HitLocation.ToString());
+		GetControlledTank()->AimAt(HitLocation);
 		return true;
 	}
 	HitLocation = FVector(0);
