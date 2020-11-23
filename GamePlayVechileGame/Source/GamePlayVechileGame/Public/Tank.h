@@ -13,11 +13,13 @@ class GAMEPLAYVECHILEGAME_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-	void AimAt(FVector HitLocation);
+	void AimAt(FVector HitLocation, float ProjectileSpeed);
 	
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void ToBeSetBarrelRef(UStaticMeshComponent* ToSetBarrel);
 
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float ProjectileSpeed = 100000;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -32,6 +34,8 @@ private:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
 
 
 

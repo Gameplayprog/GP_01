@@ -38,11 +38,44 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
-void UAimComponent::AimAt(FVector HitLocation)
+void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 {
-	auto PlayerName = GetOwner()->GetName();
-	auto GunLocation = Barrel->GetComponentLocation().ToString();
-	UE_LOG(LogTemp, Warning, TEXT("%s Aiming towards %s From %s"), *PlayerName, *HitLocation.ToString(), *GunLocation);
+	if (!Barrel) { return; }
+	FVector OUTTossVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	bool AimSolution = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OUTTossVelocity,
+		StartLocation,
+		HitLocation,
+		ProjectileSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace);
+
+
+	if (AimSolution)
+	{
+		//Maths for the launch velcoity 
+		auto AimDirection = OUTTossVelocity.GetSafeNormal();
+	/*	auto Name = GetOwner()->GetName();
+		UE_LOG(LogTemp, Warning, TEXT(" %s Aiming at : %s "), *Name, *AimDirection.ToString());*/
+		MoveBarrel(AimDirection);
+	}
+}
+//Figure out where the barrel should be, considering where it is.
+void UAimComponent::MoveBarrel(FVector AimDirection)
+{
+	auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
+	auto RotationOfAim = AimDirection.Rotation();
+	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
+	UE_LOG(LogTemp, Warning, TEXT("  AimRotation : %s "),*RotationOfAim.ToString());
+
+
+
+
+
 }
 
 
