@@ -7,6 +7,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UTankBarrel; //Forward declaration 
+
 UCLASS()
 class GAMEPLAYVECHILEGAME_API ATank : public APawn
 {
@@ -16,7 +18,7 @@ public:
 	void AimAt(FVector HitLocation, float ProjectileSpeed);
 	
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void ToBeSetBarrelRef(UStaticMeshComponent* ToSetBarrel);
+	void ToBeSetBarrelRef(UTankBarrel* ToSetBarrel);
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float ProjectileSpeed = 100000;
@@ -29,9 +31,6 @@ protected:
 private:	
 	// Sets default values for this pawn's properties
 	ATank();
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

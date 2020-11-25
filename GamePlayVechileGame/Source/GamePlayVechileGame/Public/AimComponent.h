@@ -7,6 +7,8 @@
 #include "Components/ActorComponent.h"
 #include "AimComponent.generated.h"
 
+//Forward declaration
+class UTankBarrel; //Holds Parameters for Barrels 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class GAMEPLAYVECHILEGAME_API UAimComponent : public UActorComponent
@@ -17,7 +19,7 @@ public:
 	// Sets default values for this component's properties
 	UAimComponent();
 
-	void barrelsetref(UStaticMeshComponent* ToBeSetBarrel);
+	void barrelsetref(UTankBarrel* ToBeSetBarrel);
 
 
 
@@ -31,7 +33,7 @@ public:
 
 	void AimAt(FVector HitLocation, float projectilespeed);
 private:
-	UStaticMeshComponent* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;
 
 	void MoveBarrel(FVector AimDirection);
 

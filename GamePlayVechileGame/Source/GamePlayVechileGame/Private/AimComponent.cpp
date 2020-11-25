@@ -2,6 +2,9 @@
 
 
 #include "AimComponent.h"
+#include "TankBarrel.h"
+
+
 
 // Sets default values for this component's properties
 UAimComponent::UAimComponent()
@@ -14,7 +17,7 @@ UAimComponent::UAimComponent()
 }
 
 
-void UAimComponent::barrelsetref(UStaticMeshComponent* ToBeSetBarrel)
+void UAimComponent::barrelsetref(UTankBarrel* ToBeSetBarrel)
 {
 	Barrel = ToBeSetBarrel;
 
@@ -59,9 +62,14 @@ void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 	{
 		//Maths for the launch velcoity 
 		auto AimDirection = OUTTossVelocity.GetSafeNormal();
-	/*	auto Name = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT(" %s Aiming at : %s "), *Name, *AimDirection.ToString());*/
 		MoveBarrel(AimDirection);
+		auto TIme = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT(" %f : Aim Solution Found "), TIme);
+	}
+	else
+	{
+		auto TIme = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT(" %f : Aim Solution Not Found "), TIme);
 	}
 }
 //Figure out where the barrel should be, considering where it is.
@@ -70,8 +78,8 @@ void UAimComponent::MoveBarrel(FVector AimDirection)
 	auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
 	auto RotationOfAim = AimDirection.Rotation();
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
-	UE_LOG(LogTemp, Warning, TEXT("  AimRotation : %s "),*RotationOfAim.ToString());
-
+	
+	Barrel->Elvate(5); //TODO make varible
 
 
 

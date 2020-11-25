@@ -66,7 +66,6 @@ bool AVechilePlayerController::GetVectorHitLocation(FVector LookDirection, FVect
 		return true;
 	}
 	HitLocation = FVector(0);
-	UE_LOG(LogTemp, Warning, TEXT("look direction: %s"), *HitLocation.ToString());
 	return false;
 
 }
