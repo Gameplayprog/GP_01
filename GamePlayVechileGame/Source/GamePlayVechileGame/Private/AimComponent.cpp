@@ -79,7 +79,7 @@ void UAimComponent::MoveBarrel(FVector AimDirection)
 	auto RotationOfAim = AimDirection.Rotation();
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
 	
-	Barrel->Elvate(5); //TODO make varible
+	Barrel->Elvate(DiffrenceInRotation.Pitch); //TODO make varible
 
 
 

@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AimComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-class UTankBarrel; //Forward declaration 
+///Forward declaration 
+class UTankBarrel; 
+class UAimComponent;
 
 UCLASS()
 class GAMEPLAYVECHILEGAME_API ATank : public APawn

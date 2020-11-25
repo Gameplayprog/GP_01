@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "VechilePlayerController.generated.h"
 
 /**
  * 
  */
+//Forward Declaration
+class ATank;
 UCLASS()
 class GAMEPLAYVECHILEGAME_API AVechilePlayerController : public APlayerController
 {

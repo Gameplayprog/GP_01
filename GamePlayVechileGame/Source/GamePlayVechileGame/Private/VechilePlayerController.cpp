@@ -2,6 +2,7 @@
 
 
 #include "VechilePlayerController.h"
+#include "Tank.h"
 
 
 void AVechilePlayerController::BeginPlay()
