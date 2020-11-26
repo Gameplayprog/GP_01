@@ -35,6 +35,11 @@ void ATank::ToBeSetBarrelRef(UTankBarrel* ToSetBarrel)
 {
 	Tankaimingcomponent->barrelsetref(ToSetBarrel);
 }
+void ATank::Fire()
+{
+	auto TIme = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT(" %f : Tank Fires"), TIme);
+}
 void ATank::ToBeSetTurretRef(UTankTurret* ToSetTurret)
 {
 	Tankaimingcomponent->Turretsetref(ToSetTurret);

@@ -70,14 +70,8 @@ void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 		//Maths for the launch velcoity 
 		auto AimDirection = OUTTossVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
-		auto TIme = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT(" %f : Aim Solution Found "), TIme);
 	}
-	else
-	{
-		auto TIme = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT(" %f : Aim Solution Not Found "), TIme);
-	}
+		// Aim Solution not found
 }
 //Figure out where the barrel should be, considering where it is.
 void UAimComponent::MoveBarrel(FVector AimDirection)
@@ -87,7 +81,15 @@ void UAimComponent::MoveBarrel(FVector AimDirection)
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
 	
 	Barrel->Elvate(DiffrenceInRotation.Pitch); //TODO make varible
-	Turret->Spin(DiffrenceInRotation.Yaw);
+	if (FMath::Abs(DiffrenceInRotation.Yaw) < 180)
+	{
+		Turret->Spin(DiffrenceInRotation.Yaw);
+	}
+	else
+	{
+		Turret->Spin(-DiffrenceInRotation.Yaw);
+	}
+	
 
 
 

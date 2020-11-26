@@ -15,3 +15,9 @@ void UTankTurret::Spin(float Relativespeed)
 
 }
 
+UTankTurret::UTankTurret()
+{
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> TurretAsset(TEXT("/Game/Tank/tank_fbx_Turret"));
+	this->SetStaticMesh(TurretAsset.Object);
+	this->SetRelativeLocation(FVector::ZeroVector);
+}

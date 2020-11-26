@@ -25,6 +25,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void ToBeSetBarrelRef(UTankBarrel* ToSetBarrel);
 
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+
 	
 
 
