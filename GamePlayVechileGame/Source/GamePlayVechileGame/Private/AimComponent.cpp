@@ -20,12 +20,13 @@ UAimComponent::UAimComponent()
 
 void UAimComponent::barrelsetref(UTankBarrel* ToBeSetBarrel)
 {
+	if (!ToBeSetBarrel) { return; }
 	Barrel = ToBeSetBarrel;
-
 }
 
 void UAimComponent::Turretsetref(UTankTurret * ToBeSetTurret)
 {
+	if (!ToBeSetTurret) { return; }
 	Turret = ToBeSetTurret;
 }
 
@@ -86,7 +87,7 @@ void UAimComponent::MoveBarrel(FVector AimDirection)
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
 	
 	Barrel->Elvate(DiffrenceInRotation.Pitch); //TODO make varible
-
+	Turret->Spin(DiffrenceInRotation.Yaw);
 
 
 

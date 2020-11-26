@@ -20,7 +20,7 @@ public:
 	void Elvate(float Relativespeed);
 private:
 	UPROPERTY(EditAnywhere, Category =  Setup)
-	float DegreesesPerSecond = 5; 
+	float DegreesesPerSecond = 10; 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	float MaxElevation = 40;
 	UPROPERTY(EditAnywhere, Category = Setup)
