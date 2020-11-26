@@ -22,7 +22,5 @@ private:
 	//Getting begin play inherited from actor and overiding it 
 	void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-
-	ATank* GetPlayerTank() const;
 };
 

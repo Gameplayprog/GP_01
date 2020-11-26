@@ -6,10 +6,11 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
-///Forward declaration 
+///Forward declarations
 class UTankBarrel; 
 class UAimComponent;
 class UTankTurret;
+class AProjectile;
 
 UCLASS()
 class GAMEPLAYVECHILEGAME_API ATank : public APawn
@@ -32,7 +33,8 @@ public:
 
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float ProjectileSpeed = 100000;
+	float ProjectileSpeed = 5000;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -46,7 +48,14 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	//Local Barrel for spawning projectile
+	UTankBarrel* Barrel = nullptr;
+
+	float ReloadTimer = 3; 
+	float LastFireTime = 0;
 
 
 };
