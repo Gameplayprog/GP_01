@@ -3,6 +3,7 @@
 
 #include "AimComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 
@@ -21,6 +22,11 @@ void UAimComponent::barrelsetref(UTankBarrel* ToBeSetBarrel)
 {
 	Barrel = ToBeSetBarrel;
 
+}
+
+void UAimComponent::Turretsetref(UTankTurret * ToBeSetTurret)
+{
+	Turret = ToBeSetTurret;
 }
 
 // Called when the game starts

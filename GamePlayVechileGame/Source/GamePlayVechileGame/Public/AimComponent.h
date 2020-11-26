@@ -9,6 +9,7 @@
 
 //Forward declaration
 class UTankBarrel; //Holds Parameters for Barrels 
+class UTankTurret;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class GAMEPLAYVECHILEGAME_API UAimComponent : public UActorComponent
@@ -20,6 +21,7 @@ public:
 	UAimComponent();
 
 	void barrelsetref(UTankBarrel* ToBeSetBarrel);
+	void Turretsetref(UTankTurret* ToBeSetTurret);
 
 
 
@@ -34,6 +36,7 @@ public:
 	void AimAt(FVector HitLocation, float projectilespeed);
 private:
 	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 
 	void MoveBarrel(FVector AimDirection);
 

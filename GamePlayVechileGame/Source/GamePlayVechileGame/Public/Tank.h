@@ -9,6 +9,7 @@
 ///Forward declaration 
 class UTankBarrel; 
 class UAimComponent;
+class UTankTurret;
 
 UCLASS()
 class GAMEPLAYVECHILEGAME_API ATank : public APawn
@@ -19,7 +20,13 @@ public:
 	void AimAt(FVector HitLocation, float ProjectileSpeed);
 	
 	UFUNCTION(BlueprintCallable, Category = Setup)
+	void ToBeSetTurretRef(UTankTurret* ToSetTurret);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	void ToBeSetBarrelRef(UTankBarrel* ToSetBarrel);
+
+	
+
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float ProjectileSpeed = 100000;
