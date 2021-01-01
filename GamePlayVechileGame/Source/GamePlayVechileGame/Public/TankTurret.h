@@ -19,7 +19,7 @@ public:
 
 	UTankTurret();
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float SpinSpeed = 25;
 
  };

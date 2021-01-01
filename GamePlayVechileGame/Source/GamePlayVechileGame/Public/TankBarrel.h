@@ -19,10 +19,10 @@ public:
 	//- 1 is max down movement and +1 for up movement 
 	void Elvate(float Relativespeed);
 private:
-	UPROPERTY(EditAnywhere, Category =  Setup)
+	UPROPERTY(EditDefaultsOnly, Category =  Setup)
 	float DegreesesPerSecond = 10; 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float MaxElevation = 40;
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float MinElevation = 0;
 };

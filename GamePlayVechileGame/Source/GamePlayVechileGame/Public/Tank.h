@@ -32,8 +32,8 @@ public:
 	
 
 
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float ProjectileSpeed = 5000;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ProjectileSpeed = 7500;
 
 protected:
 	// Called when the game starts or when spawned
@@ -48,12 +48,12 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	//Local Barrel for spawning projectile
 	UTankBarrel* Barrel = nullptr;
-
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimer = 3; 
 	float LastFireTime = 0;
 
