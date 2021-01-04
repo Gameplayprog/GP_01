@@ -12,7 +12,6 @@ void UTankTrack::ThrottleSet(float Throttle)
 //TODO CLAMP 
 	auto ForceApplied = GetForwardVector() * Throttle * MaxDriveForce;
 	auto ForceLocation = GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("Force location is: %s"), *ForceLocation.ToString());
 	//Unable to apply force to scenecomponenet so applied to primitive componenet
 	auto Tankroot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	Tankroot->AddForceAtLocation(ForceApplied, ForceLocation);

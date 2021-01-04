@@ -10,6 +10,7 @@
 class UTankBarrel; 
 class UAimComponent;
 class UTankTurret;
+class UTMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -39,6 +40,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UAimComponent* Tankaimingcomponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTMovementComponent* TMovementcomponent = nullptr;
 
 
 private:	
