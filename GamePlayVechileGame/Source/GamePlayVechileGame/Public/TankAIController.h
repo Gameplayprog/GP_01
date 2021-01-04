@@ -19,7 +19,7 @@ class GAMEPLAYVECHILEGAME_API ATankAIController : public AAIController
 private:
 	ATank* GetControlledTank() const;
 	//how close the tank can get to the player 
-	float AiRadius = 3000;
+	float AiRadius = 300;
 
 	//Getting begin play inherited from actor and overiding it 
 	void BeginPlay() override;
