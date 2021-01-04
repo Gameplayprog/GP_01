@@ -21,8 +21,9 @@ void ATankAIController::Tick(float DeltaTime)
 	if (PlayerTank)
 	{
 		//TODO Move towards 
+		MoveToActor(PlayerTank, AiRadius,true,true,true, DefaultNavigationFilterClass,true);
 
-		//Aim Towards 
+		//Aim Towards	
 		AITank->AimAt(PlayerTank->GetActorLocation(), PlayerTank->ProjectileSpeed);
 
 		AITank->Fire(); 

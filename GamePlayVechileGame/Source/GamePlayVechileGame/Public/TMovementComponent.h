@@ -8,7 +8,7 @@
 
 class UTankTrack;
 /**
- * 
+ * Drives the tank tracks
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class GAMEPLAYVECHILEGAME_API UTMovementComponent : public UNavMovementComponent
@@ -23,6 +23,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntenedSpinClockWise(float Throw);
+
+	virtual void RequestDirectMove(const FVector & MoveVelocity,bool bForceMaxSpeed) override;
+
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;

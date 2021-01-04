@@ -8,7 +8,6 @@ void UTankTrack::ThrottleSet(float Throttle)
 {
 	//auto TIme = GetWorld()->GetTimeSeconds();
 	auto name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT(" %s : Throtle is: %f"), *name, Throttle);
 //TODO CLAMP 
 	auto ForceApplied = GetForwardVector() * Throttle * MaxDriveForce;
 	auto ForceLocation = GetComponentLocation();
