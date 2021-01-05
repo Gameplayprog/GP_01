@@ -7,6 +7,17 @@
 #include "Components/ActorComponent.h"
 #include "AimComponent.generated.h"
 
+// enums 
+UENUM()
+enum class EAimingStates:uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
+
+
 //Forward declaration
 class UTankBarrel; //Holds Parameters for Barrels 
 class UTankTurret;
@@ -16,29 +27,25 @@ class GAMEPLAYVECHILEGAME_API UAimComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UAimComponent();
-
-	void barrelsetref(UTankBarrel* ToBeSetBarrel);
-	void Turretsetref(UTankTurret* ToBeSetTurret);
-
-
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadOnly)
+	EAimingStates AimingState = EAimingStates::Locked;
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void AimAt(FVector HitLocation, float projectilespeed);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void AimSetting(UTankBarrel* BarrelToSet, UTankTurret*TurretToSet);
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
-
 	void MoveBarrel(FVector AimDirection);
-
-		
+	UAimComponent();
 };

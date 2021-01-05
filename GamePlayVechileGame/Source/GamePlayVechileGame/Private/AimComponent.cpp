@@ -16,18 +16,10 @@ UAimComponent::UAimComponent()
 
 	// ...
 }
-
-
-void UAimComponent::barrelsetref(UTankBarrel* ToBeSetBarrel)
+void UAimComponent::AimSetting(UTankBarrel* BarrelToSet, UTankTurret*TurretToSet)
 {
-	if (!ToBeSetBarrel) { return; }
-	Barrel = ToBeSetBarrel;
-}
-
-void UAimComponent::Turretsetref(UTankTurret * ToBeSetTurret)
-{
-	if (!ToBeSetTurret) { return; }
-	Turret = ToBeSetTurret;
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
 }
 
 // Called when the game starts
@@ -76,6 +68,8 @@ void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 //Figure out where the barrel should be, considering where it is.
 void UAimComponent::MoveBarrel(FVector AimDirection)
 {
+	if (!Barrel || !Turret) { return; }
+
 	auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
 	auto RotationOfAim = AimDirection.Rotation();
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
@@ -89,10 +83,6 @@ void UAimComponent::MoveBarrel(FVector AimDirection)
 	{
 		Turret->Spin(-DiffrenceInRotation.Yaw);
 	}
-	
-
-
-
 }
 
 

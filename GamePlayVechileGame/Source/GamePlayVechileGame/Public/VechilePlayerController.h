@@ -16,9 +16,11 @@ class GAMEPLAYVECHILEGAME_API AVechilePlayerController : public APlayerControlle
 {
 	GENERATED_BODY()
 	
+protected:
+	UFUNCTION(BlueprintCallable, Category = setup)
+	ATank* GetControlledTank() const;
 
 private:
-	ATank* GetControlledTank() const;
 	//Getting begin play inherited from actor and overiding it 
 	void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

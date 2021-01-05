@@ -24,9 +24,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntenedSpinClockWise(float Throw);
 
-	virtual void RequestDirectMove(const FVector & MoveVelocity,bool bForceMaxSpeed) override;
-
 private:
+	//Pointers for 2 unassinged TankTracks
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
+	
+	//Called when AI controller MoveToActor 
+	virtual void RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed) override;
 };
