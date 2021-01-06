@@ -2,23 +2,23 @@
 
 
 #include "VechilePlayerController.h"
+#include "AimComponent.h"
 #include "Tank.h"
+
 
 
 void AVechilePlayerController::BeginPlay()
 {
 	//calling the default code before new code
 	Super::BeginPlay();
-
-
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank)
+	auto Aimingcomp = GetControlledTank()->FindComponentByClass<UAimComponent>();
+	if (Aimingcomp)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Playercontroller Not Possing a tank"));
+		AimCompFound(Aimingcomp);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Playercontroller possing %s"), *(ControlledTank->GetName()));
+		UE_LOG(LogTemp, Warning, TEXT("No Aim Comp found by controller"))
 	}
 }
 void AVechilePlayerController::Tick(float DeltaTime)

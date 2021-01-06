@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Ryan Beck
 
 #pragma once
 
@@ -7,10 +7,11 @@
 #include "VechilePlayerController.generated.h"
 
 /**
- * 
+ * Player controller
  */
 //Forward Declaration
 class ATank;
+class Aimingcomp;
 UCLASS()
 class GAMEPLAYVECHILEGAME_API AVechilePlayerController : public APlayerController
 {
@@ -19,6 +20,10 @@ class GAMEPLAYVECHILEGAME_API AVechilePlayerController : public APlayerControlle
 protected:
 	UFUNCTION(BlueprintCallable, Category = setup)
 	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = setup)
+	void AimCompFound(UAimComponent* AimCompRef);
+
 
 private:
 	//Getting begin play inherited from actor and overiding it 

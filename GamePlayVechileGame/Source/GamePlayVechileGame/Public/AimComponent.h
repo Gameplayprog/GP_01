@@ -33,7 +33,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly)
-	EAimingStates AimingState = EAimingStates::Locked;
+	EAimingStates AimingState = EAimingStates::Reloading;
 
 public:	
 	// Called every frame

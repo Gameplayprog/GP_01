@@ -50,6 +50,8 @@ private:
 	float ReloadTimer = 3; 
 	float LastFireTime = 0;
 
+	virtual void BeginPlay() override;
+
 	//Local Barrel for spawning projectile
 	UTankBarrel* Barrel = nullptr; //TODO REMOVE have in aimcomp
 };

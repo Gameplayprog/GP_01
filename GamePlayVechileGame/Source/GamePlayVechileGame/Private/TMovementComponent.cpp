@@ -34,7 +34,6 @@ void UTMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool b
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
 	
 	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
-	UE_LOG(LogTemp, Warning, TEXT(" ForwardThrow at : %s"), *TankForward.ToString());
 	
 	auto ForwardThrow = FVector::DotProduct(TankForward, AIForwardIntention);
 	IntenedMoveForward(ForwardThrow);
