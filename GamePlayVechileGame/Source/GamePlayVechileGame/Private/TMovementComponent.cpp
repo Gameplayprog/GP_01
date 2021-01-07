@@ -13,7 +13,7 @@ void UTMovementComponent::TrackSetting(UTankTrack* LeftTrackToSet, UTankTrack* R
 }
 void UTMovementComponent::IntenedMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->ThrottleSet(Throw);
 	RightTrack->ThrottleSet(Throw);
 
@@ -22,7 +22,7 @@ void UTMovementComponent::IntenedMoveForward(float Throw)
 
 void UTMovementComponent::IntenedSpinClockWise(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure (LeftTrack && RightTrack)) { return; }
 	LeftTrack->ThrottleSet(Throw);
 	RightTrack->ThrottleSet(-Throw);
 

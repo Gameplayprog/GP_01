@@ -42,7 +42,7 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 	FVector OUTTossVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	bool AimSolution = UGameplayStatics::SuggestProjectileVelocity(
@@ -68,8 +68,8 @@ void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 //Figure out where the barrel should be, considering where it is.
 void UAimComponent::MoveBarrel(FVector AimDirection)
 {
-	if (!Barrel || !Turret) { return; }
-
+	if (!ensure(Barrel) || !ensure(Turret)) { return; }
+	UE_LOG(LogTemp,Warning, TEXT("Im Here"))
 	auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
 	auto RotationOfAim = AimDirection.Rotation();
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;

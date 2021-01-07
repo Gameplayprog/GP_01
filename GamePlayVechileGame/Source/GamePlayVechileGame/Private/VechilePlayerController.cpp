@@ -32,7 +32,7 @@ ATank* AVechilePlayerController::GetControlledTank() const
 }
 void AVechilePlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector HitLocation; //Outparameter
 	if (GetSightRayHitLocation(HitLocation)) // has a side effect, is going to line trace 

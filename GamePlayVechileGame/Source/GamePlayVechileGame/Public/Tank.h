@@ -10,7 +10,6 @@
 class UTankBarrel; 
 class UAimComponent;
 class UTankTurret;
-class UTMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -26,18 +25,13 @@ public:
 
 	
 
-
+	//TODO REMOVE
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ProjectileSpeed = 7500;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UAimComponent* Tankaimingcomponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTMovementComponent* TMovementcomponent = nullptr;
-
-
 private:	
 	// Sets default values for this pawn's properties
 	ATank();
