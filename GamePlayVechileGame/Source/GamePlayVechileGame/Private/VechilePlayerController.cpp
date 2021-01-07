@@ -3,41 +3,31 @@
 
 #include "VechilePlayerController.h"
 #include "AimComponent.h"
-#include "Tank.h"
-
 
 
 void AVechilePlayerController::BeginPlay()
 {
 	//calling the default code before new code
 	Super::BeginPlay();
-	auto Aimingcomp = GetControlledTank()->FindComponentByClass<UAimComponent>();
-	if (Aimingcomp)
-	{
-		AimCompFound(Aimingcomp);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("No Aim Comp found by controller"))
-	}
+	auto Aimingcomp = GetPawn()->FindComponentByClass<UAimComponent>();
+	if (!ensure(Aimingcomp)) { return; }
+	AimCompFound(Aimingcomp);
 }
+
 void AVechilePlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	AimTowardsCrosshair();
 }
-ATank* AVechilePlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
 void AVechilePlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) { return; }
+	auto Aimingcomp = GetPawn()->FindComponentByClass<UAimComponent>();
+	if (!ensure(Aimingcomp)) { return; }
 
 	FVector HitLocation; //Outparameter
 	if (GetSightRayHitLocation(HitLocation)) // has a side effect, is going to line trace 
 	{
-		// TODO tell controlled tank to aim at this point 
+		Aimingcomp->AimAt(HitLocation);
 	}
 }
 //get world location of line trace, true only if hits landscape 
@@ -59,11 +49,11 @@ bool AVechilePlayerController::GetVectorHitLocation(FVector LookDirection, FVect
 	FHitResult TraceHit;
 	auto StartTrace = PlayerCameraManager->GetCameraLocation();
 	auto EndLocation = StartTrace + (LookDirection * TraceRange);
-
+	auto Aimingcomp = GetPawn()->FindComponentByClass<UAimComponent>();
 	if (GetWorld()->LineTraceSingleByChannel(TraceHit, StartTrace, EndLocation, ECollisionChannel::ECC_Visibility))
 	{
 		HitLocation = TraceHit.Location;
-		GetControlledTank()->AimAt(HitLocation, GetControlledTank()->ProjectileSpeed);
+		Aimingcomp->AimAt(HitLocation);
 		return true;
 	}
 	HitLocation = FVector(0);

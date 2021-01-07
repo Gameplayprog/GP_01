@@ -9,7 +9,7 @@
 
 // enums 
 UENUM()
-enum class EAimingStates:uint8
+enum class EAimingStates :uint8
 {
 	Reloading,
 	Aiming,
@@ -22,7 +22,7 @@ enum class EAimingStates:uint8
 class UTankBarrel; //Holds Parameters for Barrels 
 class UTankTurret;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class GAMEPLAYVECHILEGAME_API UAimComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -33,16 +33,19 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly)
-	EAimingStates AimingState = EAimingStates::Reloading;
+		EAimingStates AimingState = EAimingStates::Reloading;
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector HitLocation, float projectilespeed);
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void AimSetting(UTankBarrel* BarrelToSet, UTankTurret*TurretToSet);
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ProjectileSpeed = 7500;
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;

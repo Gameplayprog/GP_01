@@ -7,17 +7,15 @@
 #include "TankAIController.generated.h"
 
 //Forward Declaration 
-class ATank;
 UCLASS()
 class GAMEPLAYVECHILEGAME_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
 
 
 
 private:
-	ATank* GetControlledTank() const;
 	//how close the tank can get to the player 
 	float AiRadius = 300;
 
@@ -25,4 +23,3 @@ private:
 	void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 };
-

@@ -28,7 +28,7 @@ void UAimComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+
 }
 
 
@@ -40,7 +40,7 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
-void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
+void UAimComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 	FVector OUTTossVelocity;
@@ -63,17 +63,17 @@ void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 		auto AimDirection = OUTTossVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
 	}
-		// Aim Solution not found
+	// Aim Solution not found
 }
 //Figure out where the barrel should be, considering where it is.
 void UAimComponent::MoveBarrel(FVector AimDirection)
 {
 	if (!ensure(Barrel) || !ensure(Turret)) { return; }
-	UE_LOG(LogTemp,Warning, TEXT("Im Here"))
-	auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
+	UE_LOG(LogTemp, Warning, TEXT("Im Here"))
+		auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
 	auto RotationOfAim = AimDirection.Rotation();
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
-	
+
 	Barrel->Elvate(DiffrenceInRotation.Pitch); //TODO make varible
 	if (FMath::Abs(DiffrenceInRotation.Yaw) < 180)
 	{
