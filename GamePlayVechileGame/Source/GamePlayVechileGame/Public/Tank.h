@@ -7,7 +7,8 @@
 #include "Tank.generated.h"
 
 ///Forward declarations
-class UTankBarrel;
+class UTankBarrel; 
+class UAimComponent;
 class UTankTurret;
 class AProjectile;
 
@@ -17,29 +18,31 @@ class GAMEPLAYVECHILEGAME_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable)
-		void Fire();
+	void AimAt(FVector HitLocation, float ProjectileSpeed);
+	
+	
 
-
+	
 
 	//TODO REMOVE
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-		float ProjectileSpeed = 7500;
+	float ProjectileSpeed = 7500;
 
-private:
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	UAimComponent* Tankaimingcomponent = nullptr;
+private:	
 	// Sets default values for this pawn's properties
 	ATank();
 
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
-		TSubclassOf<AProjectile> ProjectileBlueprint;
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-		float ReloadTimer = 3;
+	float ReloadTimer = 3; 
 	float LastFireTime = 0;
 
 	virtual void BeginPlay() override;
 
-	//Local Barrel for spawning projectile
-	UTankBarrel* Barrel = nullptr; //TODO REMOVE have in aimcomp
 };

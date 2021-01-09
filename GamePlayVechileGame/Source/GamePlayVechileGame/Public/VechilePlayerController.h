@@ -9,17 +9,20 @@
 /**
  * Player controller
  */
- //Forward Declaration
-class AimComponent;
+//Forward Declaration
+class ATank;
+class Aimingcomp;
 UCLASS()
 class GAMEPLAYVECHILEGAME_API AVechilePlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
+	
 protected:
+	UFUNCTION(BlueprintCallable, Category = setup)
+	ATank* GetControlledTank() const;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = setup)
-		void AimCompFound(UAimComponent* AimCompRef);
+	void AimCompFound(UAimComponent* AimCompRef);
 
 
 private:
@@ -28,18 +31,18 @@ private:
 	virtual void Tick(float DeltaTime) override;
 	//start the Vechile mocing gun so that the show would hit where crosshair itersects world
 	void AimTowardsCrosshair();
-	bool GetSightRayHitLocation(FVector& HitLocation) const;
+	bool GetSightRayHitLocation(FVector& HitLocation ) const;
+	
+	UPROPERTY(EditDefaultsOnly)
+	float crosshairXLocation = 0.5;
 
 	UPROPERTY(EditDefaultsOnly)
-		float crosshairXLocation = 0.5;
-
-	UPROPERTY(EditDefaultsOnly)
-		float crosshairYLocation = 0.3333;
+	float crosshairYLocation = 0.3333;
 
 	bool GetDirectionOFlook(FVector2D ScreenLocation, FVector& LookDirection) const;
 
 	bool GetVectorHitLocation(FVector LookDirection, FVector TraceEndLocation) const;
 
 	UPROPERTY(EditDefaultsOnly)
-		float TraceRange = 1000000.;
+	float TraceRange = 1000000.; 
 };

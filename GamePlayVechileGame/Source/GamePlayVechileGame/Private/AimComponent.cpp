@@ -4,6 +4,7 @@
 #include "AimComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 
 
@@ -28,7 +29,7 @@ void UAimComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-
+	
 }
 
 
@@ -40,7 +41,7 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
-void UAimComponent::AimAt(FVector HitLocation)
+void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 {
 	if (!ensure(Barrel)) { return; }
 	FVector OUTTossVelocity;
@@ -63,17 +64,17 @@ void UAimComponent::AimAt(FVector HitLocation)
 		auto AimDirection = OUTTossVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
 	}
-	// Aim Solution not found
+		// Aim Solution not found
 }
 //Figure out where the barrel should be, considering where it is.
 void UAimComponent::MoveBarrel(FVector AimDirection)
 {
 	if (!ensure(Barrel) || !ensure(Turret)) { return; }
-	UE_LOG(LogTemp, Warning, TEXT("Im Here"))
-		auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
+	UE_LOG(LogTemp,Warning, TEXT("Im Here"))
+	auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
 	auto RotationOfAim = AimDirection.Rotation();
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
-
+	
 	Barrel->Elvate(DiffrenceInRotation.Pitch); //TODO make varible
 	if (FMath::Abs(DiffrenceInRotation.Yaw) < 180)
 	{
@@ -82,6 +83,19 @@ void UAimComponent::MoveBarrel(FVector AimDirection)
 	else
 	{
 		Turret->Spin(-DiffrenceInRotation.Yaw);
+	}
+}
+
+void UAimComponent::Fire()
+{
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+	bool IsReloaded = (GetWorld()->GetRealTimeSeconds() - LastFireTime) > ReloadTimer;
+
+	if (IsReloaded)
+	{
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+		Projectile->LaunchProjectile(ProjectileSpeed);
+		LastFireTime = GetWorld()->GetRealTimeSeconds();
 	}
 }
 
