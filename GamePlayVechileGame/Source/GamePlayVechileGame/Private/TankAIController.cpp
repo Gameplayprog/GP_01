@@ -17,6 +17,8 @@ void ATankAIController::Tick(float DeltaTime)
 
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto AITank = Cast<ATank>(GetPawn());
+	auto Tank = GetPawn();
+	auto AimComp = Tank->FindComponentByClass<UAimComponent>();
 
 	if (PlayerTank)
 	{
@@ -26,7 +28,7 @@ void ATankAIController::Tick(float DeltaTime)
 		//Aim Towards	
 		AITank->AimAt(PlayerTank->GetActorLocation(), PlayerTank->ProjectileSpeed);
 		
-		//tankaimingcomponent->Fire();
+		AimComp->Fire();
 	}
 
 }

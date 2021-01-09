@@ -47,6 +47,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Fire();
+
+	UPROPERTY(BlueprintReadWrite, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
@@ -54,9 +57,7 @@ private:
 	UAimComponent();
 
 
-
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint;
+	
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimer = 3;

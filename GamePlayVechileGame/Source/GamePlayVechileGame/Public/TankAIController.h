@@ -9,6 +9,8 @@
 
 //Forward Declaration 
 class ATank;
+//class UAimComponent;
+
 UCLASS()
 class GAMEPLAYVECHILEGAME_API ATankAIController : public AAIController
 {
