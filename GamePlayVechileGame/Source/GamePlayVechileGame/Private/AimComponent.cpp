@@ -23,13 +23,21 @@ void UAimComponent::AimSetting(UTankBarrel* BarrelToSet, UTankTurret*TurretToSet
 	Turret = TurretToSet;
 }
 
+bool UAimComponent::IsAiming()
+{
+	auto BarrelVec = Barrel->GetForwardVector();
+	
+	
+	return !BarrelVec.Equals(AimDirection, 0.01);
+}
+
 // Called when the game starts
 void UAimComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	// ...
-	
+	LastFireTime = GetWorld()->GetRealTimeSeconds();
 }
 
 
@@ -39,6 +47,19 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+	if (bool IsReloaded = (GetWorld()->GetRealTimeSeconds() - LastFireTime) < ReloadTimer)
+	{
+		UE_LOG(LogTemp, Warning, TEXT(""))
+		AimingState = EAimingStates::Reloading;
+	}
+	else if (IsAiming())
+	{
+		AimingState = EAimingStates::Aiming;
+	}
+	else
+	{
+		AimingState = EAimingStates::Locked;
+	}
 }
 
 void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
@@ -61,7 +82,7 @@ void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 	if (AimSolution)
 	{
 		//Maths for the launch velcoity 
-		auto AimDirection = OUTTossVelocity.GetSafeNormal();
+		AimDirection = OUTTossVelocity.GetSafeNormal();
 		MoveBarrel(AimDirection);
 	}
 		// Aim Solution not found
@@ -70,7 +91,6 @@ void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 void UAimComponent::MoveBarrel(FVector AimDirection)
 {
 	if (!ensure(Barrel) || !ensure(Turret)) { return; }
-	UE_LOG(LogTemp,Warning, TEXT("Im Here"))
 	auto RotationOfBarrel = Barrel->GetForwardVector().Rotation();
 	auto RotationOfAim = AimDirection.Rotation();
 	auto DiffrenceInRotation = RotationOfAim - RotationOfBarrel;
@@ -89,9 +109,9 @@ void UAimComponent::MoveBarrel(FVector AimDirection)
 void UAimComponent::Fire()
 {
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
-	bool IsReloaded = (GetWorld()->GetRealTimeSeconds() - LastFireTime) > ReloadTimer;
+	
 
-	if (IsReloaded)
+	if (AimingState != EAimingStates::Reloading)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->LaunchProjectile(ProjectileSpeed);

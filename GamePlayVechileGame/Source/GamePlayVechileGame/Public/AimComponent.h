@@ -54,14 +54,19 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	void MoveBarrel(FVector AimDirection);
+	bool IsAiming();
 	UAimComponent();
+
 
 
 	
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimer = 3;
+
 	float LastFireTime = 0;
 
 	float ProjectileSpeed = 7500;
+
+	FVector AimDirection;
 };
