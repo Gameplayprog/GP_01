@@ -50,6 +50,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	EAimingStates GetAimingState() const;
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;

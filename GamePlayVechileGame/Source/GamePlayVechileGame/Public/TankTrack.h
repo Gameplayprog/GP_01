@@ -20,13 +20,15 @@ public:
 	
 	// max force per track in NewTons
 	UPROPERTY(EditDefaultsOnly)
-	float MaxDriveForce = 400000; 
+	float MaxDriveForce = 500000000; 
 
 private:
 	virtual void BeginPlay() override;
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
-
+	void SideWaysForce();
 	UTankTrack();
+	void DriveTrack();
+	float CThrottle = 0;
 };
 

@@ -28,7 +28,10 @@ void ATankAIController::Tick(float DeltaTime)
 		//Aim Towards	
 		AITank->AimAt(PlayerTank->GetActorLocation(), PlayerTank->ProjectileSpeed);
 		
-		AimComp->Fire();
+		if (AimComp->GetAimingState() == EAimingStates::Locked)
+		{
+			AimComp->Fire();
+		}
 	}
 
 }

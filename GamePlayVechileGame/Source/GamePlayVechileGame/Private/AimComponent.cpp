@@ -61,6 +61,10 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		AimingState = EAimingStates::Locked;
 	}
 }
+EAimingStates UAimComponent::GetAimingState() const
+{
+	return AimingState;
+}
 
 void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
 {

@@ -32,15 +32,11 @@ void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	auto SidewaysSpeed = FVector::DotProduct(GetActorRightVector(), GetVelocity());
-
-	auto Correction = - SidewaysSpeed / DeltaTime * GetActorRightVector();
-
-	auto root = Cast<UStaticMeshComponent>(GetRootComponent());
-	auto force = (root->GetMass() * Correction);
-	root->AddForce(force);
+	
 
 }
+
+
 
 
 

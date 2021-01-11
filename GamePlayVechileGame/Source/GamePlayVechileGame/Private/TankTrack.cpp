@@ -6,10 +6,14 @@
 
 void UTankTrack::ThrottleSet(float Throttle)
 {
-	//auto TIme = GetWorld()->GetTimeSeconds();
-	auto name = GetName();
 //TODO CLAMP 
-	auto ForceApplied = GetForwardVector() * Throttle * MaxDriveForce;
+	CThrottle = FMath::Clamp<float>(CThrottle + Throttle, -1, 1);
+
+}
+
+void UTankTrack::DriveTrack()
+{
+	auto ForceApplied = GetForwardVector() * CThrottle * MaxDriveForce;
 	auto ForceLocation = GetComponentLocation();
 	//Unable to apply force to scenecomponenet so applied to primitive componenet
 	auto Tankroot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
@@ -31,7 +35,19 @@ void UTankTrack::BeginPlay()
 }
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("im here"))
+	DriveTrack();
+	SideWaysForce();
+	CThrottle = 0;
+}
+
+void UTankTrack::SideWaysForce()
+{
+	auto SidewaysSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
+	auto Correction = -SidewaysSpeed / DeltaTime * GetRightVector();
+	auto root = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	auto force = (root->GetMass() * Correction);
+	root->AddForce(force);
 }
 
 
