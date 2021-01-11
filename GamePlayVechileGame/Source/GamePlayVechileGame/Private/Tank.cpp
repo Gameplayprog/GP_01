@@ -6,6 +6,12 @@
 #include "Projectile.h"
 #include "TankBarrel.h"
 
+float ATank::HealthGetter() const
+{
+	//casting ints to floats for hp %
+	return (float)Chealth / (float)Health;
+}
+
 // Sets default values
 ATank::ATank()
 {
@@ -31,9 +37,16 @@ void ATank::AimAt(FVector HitLocation ,float ProjectileSpeed) {
 void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
-	
+float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	int32 Damagepoints = FPlatformMath::RoundToInt(DamageAmount);
+	int32 DamageToTake = FMath::Clamp(Damagepoints, 0, Health);
 
+	Chealth -= DamageToTake;
+	UE_LOG(LogTemp, Warning, TEXT("Damage amount = %f, damage to Take = %i"), DamageAmount, DamageToTake)
+	return DamageToTake;
 }
 
 

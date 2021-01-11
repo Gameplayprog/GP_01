@@ -20,13 +20,11 @@ class GAMEPLAYVECHILEGAME_API ATank : public APawn
 public:
 	void AimAt(FVector HitLocation, float ProjectileSpeed);
 	
-	
-
-	
-
-	//TODO REMOVE
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ProjectileSpeed = 7500;
+	//returns between 0-1 for %
+	UFUNCTION(BlueprintPure, Category = HP)
+	float HealthGetter() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -45,5 +43,9 @@ private:
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)override;
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	int32 Health = 100;
+	UPROPERTY(VisibleAnywhere, Category = HP)
+	int32 Chealth = Health;
 };

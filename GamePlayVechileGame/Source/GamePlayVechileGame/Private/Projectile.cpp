@@ -3,6 +3,7 @@
 
 #include "Projectile.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -21,7 +22,8 @@ AProjectile::AProjectile()
 	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName(" Impact Blast"));
 	ImpactBlast->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->bAutoActivate = false;
-
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion force"));
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	TankProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName(" Tank Projectile Movement Component"));
 	TankProjectileMovementComponent->bAutoActivate = false;
 }
@@ -50,6 +52,18 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 {
 	MuzzeleBlast->Deactivate();
 	ImpactBlast->Activate();
+	ExplosionForce->FireImpulse();
+	SetRootComponent(ImpactBlast);
+	Collsion->DestroyComponent();
 
+	UGameplayStatics::ApplyRadialDamage(this, AppliedDamage, GetActorLocation(),ExplosionForce->Radius,UDamageType::StaticClass(),TArray<AActor*>());//damage all\\
+
+	//outparameter
+	FTimerHandle timer ;
+	GetWorld()->GetTimerManager().SetTimer(timer,this,&AProjectile::OnTimerExpire,DestroyDelay,false);
+}
+void AProjectile::OnTimerExpire()
+{
+	Destroy();
 }
 

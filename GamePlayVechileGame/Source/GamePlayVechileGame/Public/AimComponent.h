@@ -63,7 +63,7 @@ private:
 	UAimComponent();
 	
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	int32 AmmoLeft = 1;
+	int32 AmmoLeft = 15;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimer = 3;
 
