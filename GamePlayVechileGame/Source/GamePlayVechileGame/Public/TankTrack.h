@@ -20,7 +20,7 @@ public:
 	
 	// max force per track in NewTons
 	UPROPERTY(EditDefaultsOnly)
-	float MaxDriveForce = 40000000; 
+	float MaxDriveForce = 90000000; 
 
 private:
 	virtual void BeginPlay() override;
