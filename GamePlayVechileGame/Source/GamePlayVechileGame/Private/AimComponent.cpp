@@ -47,9 +47,12 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
-	if (bool IsReloaded = (GetWorld()->GetRealTimeSeconds() - LastFireTime) < ReloadTimer)
+	if (AmmoLeft <= 0) 
+	{ 
+		AimingState = EAimingStates::NoAmmo; 
+	}
+	else if (bool IsReloaded = (GetWorld()->GetRealTimeSeconds() - LastFireTime) < ReloadTimer)
 	{
-		UE_LOG(LogTemp, Warning, TEXT(""))
 		AimingState = EAimingStates::Reloading;
 	}
 	else if (IsAiming())
@@ -61,9 +64,15 @@ void UAimComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 		AimingState = EAimingStates::Locked;
 	}
 }
+
 EAimingStates UAimComponent::GetAimingState() const
 {
 	return AimingState;
+}
+
+int UAimComponent::GetAmmo() const
+{
+	return AmmoLeft;
 }
 
 void UAimComponent::AimAt(FVector HitLocation, float ProjectileSpeed)
@@ -115,11 +124,12 @@ void UAimComponent::Fire()
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 	
 
-	if (AimingState != EAimingStates::Reloading)
+	if (AimingState == EAimingStates::Locked || AimingState == EAimingStates::Aiming)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->LaunchProjectile(ProjectileSpeed);
 		LastFireTime = GetWorld()->GetRealTimeSeconds();
+		AmmoLeft--;
 	}
 }
 

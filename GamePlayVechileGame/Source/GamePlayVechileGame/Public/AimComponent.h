@@ -13,7 +13,8 @@ enum class EAimingStates:uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	NoAmmo
 };
 
 
@@ -52,23 +53,23 @@ public:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	EAimingStates GetAimingState() const;
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	int GetAmmo() const;
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 	void MoveBarrel(FVector AimDirection);
 	bool IsAiming();
 	UAimComponent();
-
-
-
 	
-
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 AmmoLeft = 1;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimer = 3;
 
 	float LastFireTime = 0;
-
 	float ProjectileSpeed = 7500;
-
 	FVector AimDirection;
+
+
 };

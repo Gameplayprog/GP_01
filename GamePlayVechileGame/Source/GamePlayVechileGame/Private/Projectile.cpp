@@ -8,6 +8,13 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	Collsion = CreateDefaultSubobject<UStaticMeshComponent>(FName(" Collsion"));
+	SetRootComponent(Collsion);
+	Collsion->SetNotifyRigidBodyCollision(true);
+	Collsion->SetVisibility(false);
+	//Setting up the Particle with sensiable defaults
+	MuzzeleBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName(" Muzzle Blast"));
+	MuzzeleBlast->AttachTo(RootComponent);
 
 	TankProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName(" Tank Projectile Movement Component"));
 	TankProjectileMovementComponent->bAutoActivate = false;

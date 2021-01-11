@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Projectile.generated.h"
 
 class UTankProjectileMovementComponent;
@@ -28,4 +29,8 @@ public:
 	void LaunchProjectile(float Speed);
 private:
 	UProjectileMovementComponent* TankProjectileMovementComponent = nullptr;
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* Collsion = nullptr;
+	UPROPERTY(VisibleAnywhere)
+	UParticleSystemComponent* MuzzeleBlast = nullptr;
 };
