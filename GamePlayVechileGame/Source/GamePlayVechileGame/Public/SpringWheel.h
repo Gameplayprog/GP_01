@@ -24,9 +24,8 @@ public:
 	ASpringWheel();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void SetupConstaints();
 private:
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* mass = nullptr;
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* wheel = nullptr;
 	UPROPERTY(VisibleAnywhere)

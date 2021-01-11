@@ -10,8 +10,6 @@ ASpringWheel::ASpringWheel()
 	PrimaryActorTick.bCanEverTick = true;
 	spring = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Spring"));
 	SetRootComponent(spring);
-	mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("mass"));
-	mass->SetupAttachment(spring);
 	wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("wheel"));
 	wheel->SetupAttachment(spring);
 }
@@ -20,15 +18,7 @@ ASpringWheel::ASpringWheel()
 void ASpringWheel::BeginPlay()
 {
 	Super::BeginPlay();
-	if (GetAttachParentActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Not null"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT(" null"));
-	}
-	
+	SetupConstaints();
 }
 
 // Called every frame
@@ -37,4 +27,11 @@ void ASpringWheel::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+void ASpringWheel::SetupConstaints()
+{
 
+	if (!GetAttachParentActor()) { return; }
+	UPrimitiveComponent* RootBody = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+	if (!RootBody) { return; }
+	spring->SetConstrainedComponents(RootBody, NAME_None, wheel, NAME_None);
+}
