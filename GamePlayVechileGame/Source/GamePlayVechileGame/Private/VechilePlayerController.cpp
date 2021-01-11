@@ -75,3 +75,17 @@ bool AVechilePlayerController::GetDirectionOFlook(FVector2D ScreenLocation, FVec
 	FVector CameraLocation; // to be removed
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraLocation, LookDirection);
 }
+void AVechilePlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto Tank = Cast<ATank>(InPawn);
+		if (!ensure(Tank)) { return; }
+		Tank->Death.AddUniqueDynamic(this, &AVechilePlayerController::DelegateMethod);
+	}
+}
+void AVechilePlayerController::DelegateMethod()
+{
+	StartSpectatingOnly();
+}

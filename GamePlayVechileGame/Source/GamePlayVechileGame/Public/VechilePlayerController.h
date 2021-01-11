@@ -41,6 +41,10 @@ private:
 
 	bool GetDirectionOFlook(FVector2D ScreenLocation, FVector& LookDirection) const;
 
+	virtual void SetPawn(APawn * InPawn)override;
+	UFUNCTION()
+	void DelegateMethod();
+
 	bool GetVectorHitLocation(FVector LookDirection, FVector TraceEndLocation) const;
 
 	UPROPERTY(EditDefaultsOnly)

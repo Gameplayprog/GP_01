@@ -49,5 +49,5 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	int32 Health = 100;
 	UPROPERTY(VisibleAnywhere, Category = HP)
-	int32 Chealth = Health;
+	int32 Chealth;
 };

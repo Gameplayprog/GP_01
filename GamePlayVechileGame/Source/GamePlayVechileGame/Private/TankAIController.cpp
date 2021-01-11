@@ -49,6 +49,7 @@ void ATankAIController::SetPawn(APawn * InPawn)
 
 void ATankAIController::DelegateMethod()
 {
-
+	if (!GetPawn()) { return; }
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 

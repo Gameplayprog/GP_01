@@ -24,7 +24,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();//Needed for Beginplay to run in BP
 	auto TankName = GetName();
-
+	Chealth = Health;
 	Tankaimingcomponent = FindComponentByClass<UAimComponent>();
 }
 
