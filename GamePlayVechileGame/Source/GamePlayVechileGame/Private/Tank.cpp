@@ -45,7 +45,10 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AC
 	int32 DamageToTake = FMath::Clamp(Damagepoints, 0, Health);
 
 	Chealth -= DamageToTake;
-	UE_LOG(LogTemp, Warning, TEXT("Damage amount = %f, damage to Take = %i"), DamageAmount, DamageToTake)
+	if (Chealth <= 0)
+	{
+		Death.Broadcast();
+	}
 	return DamageToTake;
 }
 

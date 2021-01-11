@@ -36,3 +36,19 @@ void ATankAIController::Tick(float DeltaTime)
 
 }
 
+void ATankAIController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto Tank = Cast<ATank>(InPawn);
+		if (!ensure(Tank)) { return; }
+		Tank->Death.AddUniqueDynamic(this, &ATankAIController::DelegateMethod);
+	}
+}
+
+void ATankAIController::DelegateMethod()
+{
+
+}
+

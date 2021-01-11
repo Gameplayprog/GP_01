@@ -12,6 +12,7 @@ class UAimComponent;
 class UTankTurret;
 class AProjectile;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTDelegate);
 UCLASS()
 class GAMEPLAYVECHILEGAME_API ATank : public APawn
 {
@@ -26,6 +27,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = HP)
 	float HealthGetter() const;
 
+	FTDelegate Death;
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UAimComponent* Tankaimingcomponent = nullptr;
