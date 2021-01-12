@@ -24,8 +24,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void AddForce(float Throw);
+
+	void GiveForce();
 private:
 	void SetupConstaints();
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit );
 
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* wheel = nullptr;
@@ -38,5 +43,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UPhysicsConstraintComponent* Axlespring = nullptr;
-
+	
+	float ThrowThisFrame = 0;
 };
