@@ -23,7 +23,7 @@ private:
 	ATank* GetControlledTank() const;
 	//how close the tank can get to the player 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float AiRadius = 800;
+	float AiRadius = 3000;
 
 	//Getting begin play inherited from actor and overiding it 
 	void BeginPlay() override;
