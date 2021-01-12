@@ -13,10 +13,6 @@ class GAMEPLAYVECHILEGAME_API USpawnWheel : public USceneComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	USpawnWheel();
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -27,7 +23,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AActor> Spawn;
-private:
 
-		
+	// Sets default values for this component's properties
+	USpawnWheel();
+
+	AActor* SpawnedActorGetter()const { return SpawnedActor; };
+private:
+	UPROPERTY()
+	AActor* SpawnedActor;
 };

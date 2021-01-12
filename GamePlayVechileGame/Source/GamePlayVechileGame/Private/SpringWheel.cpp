@@ -32,6 +32,10 @@ void ASpringWheel::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+void ASpringWheel::AddForce(float Throw)
+{
+	wheel->AddForce(Axle->GetForwardVector() * Throw);
+}
 void ASpringWheel::SetupConstaints()
 {
 

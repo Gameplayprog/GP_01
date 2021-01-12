@@ -14,14 +14,15 @@ USpawnWheel::USpawnWheel()
 }
 
 
+
 // Called when the game starts
 void USpawnWheel::BeginPlay()
 {
 	Super::BeginPlay();
-	auto Actor = GetWorld()->SpawnActorDeferred<AActor>(Spawn, GetComponentTransform());
-	if (!Actor) { return; }
-	Actor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
-	UGameplayStatics::FinishSpawningActor(Actor, GetComponentTransform());
+	SpawnedActor = GetWorld()->SpawnActorDeferred<AActor>(Spawn, GetComponentTransform());
+	if (!SpawnedActor) { return; }
+	SpawnedActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
+	UGameplayStatics::FinishSpawningActor(SpawnedActor, GetComponentTransform());
 
 	// ...
 	

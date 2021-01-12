@@ -3,21 +3,25 @@
 
 #include "TankTrack.h"
 #include "UObject/ConstructorHelpers.h"
+#include "SpawnWheel.h"
+#include "SpringWheel.h"
 
 void UTankTrack::ThrottleSet(float Throttle)
 {
 //TODO CLAMP 
-	CThrottle = FMath::Clamp<float>(CThrottle + Throttle, -1, 1);
-
+	float CThrottle = FMath::Clamp<float>(Throttle, -1, 1);
+	DriveTrack(CThrottle);
 }
 
-void UTankTrack::DriveTrack()
+void UTankTrack::DriveTrack(float CThrottle)
 {
-	auto ForceApplied = GetForwardVector() * CThrottle * MaxDriveForce;
-	auto ForceLocation = GetComponentLocation();
-	//Unable to apply force to scenecomponenet so applied to primitive componenet
-	auto Tankroot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	Tankroot->AddForceAtLocation(ForceApplied, ForceLocation);
+	auto ForceApplied = CThrottle * MaxDriveForce;
+	auto Wheels = GetWheels();
+	auto ForcePerwheel = ForceApplied / Wheels.Num();
+	for (ASpringWheel* wheel : Wheels)
+	{
+		wheel->AddForce(ForcePerwheel);
+	}
 }
 
 UTankTrack::UTankTrack()
@@ -30,24 +34,25 @@ UTankTrack::UTankTrack()
 void UTankTrack::BeginPlay()
 {
 	Super::BeginPlay();
-
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
-}
-void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
-{
-	DriveTrack();
-	SideWaysForce();
-	CThrottle = 0;
 }
 
-void UTankTrack::SideWaysForce()
+TArray<ASpringWheel*> UTankTrack::GetWheels()const
 {
-	auto SidewaysSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
-	auto DeltaTime = GetWorld()->GetDeltaSeconds();
-	auto Correction = -SidewaysSpeed / DeltaTime * GetRightVector();
-	auto root = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	auto force = (root->GetMass() * Correction);
-	root->AddForce(force);
+	TArray<ASpringWheel*> Result;
+	TArray<USceneComponent*> Children;
+	GetChildrenComponents(true, Children);
+	for (USceneComponent* Child : Children)
+	{
+		auto SpawnChild = Cast<USpawnWheel>(Child);
+		if (!SpawnChild)  continue;
+
+		AActor* ChildBeenSpawned = SpawnChild->SpawnedActorGetter();
+		auto Wheel = Cast<ASpringWheel>(ChildBeenSpawned);
+		if (!Wheel) continue;
+		Result.Add(Wheel);
+	}
+	return Result;
 }
+
 
 

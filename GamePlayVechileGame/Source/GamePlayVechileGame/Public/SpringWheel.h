@@ -13,9 +13,7 @@ class GAMEPLAYVECHILEGAME_API ASpringWheel : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
 	
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -25,7 +23,7 @@ public:
 	ASpringWheel();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
+	void AddForce(float Throw);
 private:
 	void SetupConstaints();
 
