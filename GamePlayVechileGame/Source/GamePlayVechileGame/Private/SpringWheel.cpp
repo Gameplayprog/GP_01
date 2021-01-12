@@ -10,8 +10,13 @@ ASpringWheel::ASpringWheel()
 	PrimaryActorTick.bCanEverTick = true;
 	spring = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Spring"));
 	SetRootComponent(spring);
-	wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("wheel"));
-	wheel->SetupAttachment(spring);
+
+	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle"));
+	Axle->SetupAttachment(spring);
+	wheel = CreateDefaultSubobject<USphereComponent>(FName("wheel"));
+	wheel->SetupAttachment(Axle);
+	Axlespring = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Axle spring"));
+	Axlespring->SetupAttachment(Axle);
 }
 
 // Called when the game starts or when spawned
@@ -33,5 +38,7 @@ void ASpringWheel::SetupConstaints()
 	if (!GetAttachParentActor()) { return; }
 	UPrimitiveComponent* RootBody = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 	if (!RootBody) { return; }
-	spring->SetConstrainedComponents(RootBody, NAME_None, wheel, NAME_None);
+	spring->SetConstrainedComponents(RootBody, NAME_None, Axle, NAME_None);
+	Axlespring->SetConstrainedComponents(Axle, NAME_None, wheel, NAME_None);
+
 }
